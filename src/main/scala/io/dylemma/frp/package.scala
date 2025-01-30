@@ -10,7 +10,7 @@ package object frp {
 	  * `System.currentTimeMillis`.
 	  */
 	implicit object SystemTime extends Time[Long] {
-		def currentTime = System.currentTimeMillis
+		def currentTime = System.currentTimeMillis()
 	}
 
 	implicit class EventStreamFutures[A](stream: EventStream[A]) {
@@ -25,7 +25,7 @@ package object frp {
 		def next(implicit obs: Observer): Future[A] = {
 			if (stream.stopped) Future.failed(new NoSuchElementException("A stopped EventStream has no next event"))
 			else {
-				val p = Promise[A]
+				val p = Promise[A]()
 				stream sink {
 					case Stop =>
 						p.failure(new NoSuchElementException("Stream stopped before firing any event"))
@@ -47,7 +47,7 @@ package object frp {
 		def last(implicit obs: Observer): Future[A] = {
 			if (stream.stopped) Future.failed(new NoSuchElementException("Stream is already stopped"))
 			else {
-				val p = Promise[A]
+				val p = Promise[A]()
 				var latest: Try[A] = Failure(new NoSuchElementException("No event fired"))
 				stream sink {
 					case Stop =>
@@ -71,7 +71,7 @@ package object frp {
 		def end[T](implicit obs: Observer, time: Time[T]): Future[T] = {
 			if (stream.stopped) Future successful time.currentTime
 			else {
-				val p = Promise[T]
+				val p = Promise[T]()
 				stream onEnd { p success time.currentTime }
 				p.future
 			}

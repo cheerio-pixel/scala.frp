@@ -1,10 +1,11 @@
 package io.dylemma.frp.test
 
+import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest._
 import io.dylemma.frp._
 import collection.mutable.ListBuffer
 
-class EventStreamSinkTests extends FunSuite with Observer {
+class EventStreamSinkTests extends AnyFunSuite with Observer {
 
 	test("EventStream.onNext encounters *only* the next event") {
 		val s = EventSource[Int]()

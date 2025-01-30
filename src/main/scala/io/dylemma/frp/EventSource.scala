@@ -40,7 +40,7 @@ trait EventSource[A] extends EventStream[A] with EventSourceImpl[A] {
 	  */
 	protected def purgeThreshold: Int = 5
 
-	private var refs = new ParHashSet[WeakReference[Event[A] => Boolean]]
+	private var refs = new ParHashSet[WeakReference[Event[A] => Boolean]]()
 
 	private[frp] def addHandler(handler: Event[A] => Boolean): Unit = {
 		refs += new WeakReference(handler)

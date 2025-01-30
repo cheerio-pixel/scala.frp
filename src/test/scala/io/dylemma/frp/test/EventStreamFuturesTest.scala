@@ -5,16 +5,18 @@ import org.scalatest._
 import org.scalatest.concurrent.Waiters
 import org.scalatest.exceptions.TestFailedException
 
+import org.scalatest.funsuite.AnyFunSuite
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
-class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with Observer {
+class EventStreamFuturesTest extends AnyFunSuite with TestHelpers with Waiters with Observer {
 
 	test("EventStream.next completes successfully when the stream fires an event") {
 		val w = new Waiter
 		val s = EventSource[Int]()
 
-		s.next foreach { case 5 => w.dismiss }
+		s.next foreach { case 5 => w.dismiss() }
 		s fire 5
 		w.await(dismissals(1))
 	}
@@ -25,7 +27,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 
 		s.stop() // stream stopped before `next` is called
 		s.next onComplete {
-			case Failure(_) => w.dismiss
+			case Failure(_) => w.dismiss()
 			case Success(_) =>
 		}
 		w.await(dismissals(1))
@@ -36,7 +38,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 		val s = EventSource[Int]()
 
 		s.next onComplete {
-			case Failure(_) => w.dismiss
+			case Failure(_) => w.dismiss()
 			case Success(_) =>
 		}
 		s.stop() // stream stopped after `next` is called
@@ -51,7 +53,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 		s.next onComplete {
 			case _ =>
 				fail("Future was expected to never complete")
-				w.dismiss
+				w.dismiss()
 		}
 
 		//await should time out, causing a failure. expect and intercept that failure
@@ -64,7 +66,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 		val w = new Waiter
 		val s = EventSource[Int]()
 
-		s.last foreach { case 3 => w.dismiss }
+		s.last foreach { case 3 => w.dismiss() }
 		s fire 1
 		s fire 2
 		s fire 3
@@ -77,7 +79,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 		val w = new Waiter
 		val s = EventSource[Int]()
 
-		s.last foreach { case 3 => w.dismiss }
+		s.last foreach { case 3 => w.dismiss() }
 		s fire 1
 		s fire 2
 		s fire 3
@@ -94,7 +96,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 		s.stop()
 
 		s.last onComplete {
-			case Failure(_) => w.dismiss
+			case Failure(_) => w.dismiss()
 			case Success(_) =>
 		}
 		w.await(dismissals(1))
@@ -105,7 +107,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 		val s = EventSource[Int]()
 
 		s.last onComplete {
-			case Failure(_) => w.dismiss
+			case Failure(_) => w.dismiss()
 			case Success(_) =>
 		}
 		s.stop()
@@ -117,7 +119,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 		val s = EventSource[Int]()
 		s.stop()
 
-		s.end foreach { case _ => w.dismiss }
+		s.end foreach { case _ => w.dismiss() }
 		w.await(dismissals(1))
 	}
 
@@ -125,7 +127,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 		val w = new Waiter
 		val s = EventSource[Int]()
 
-		s.end foreach { case _ => w.dismiss }
+		s.end foreach { case _ => w.dismiss() }
 		s.stop()
 		w.await(dismissals(1))
 	}
@@ -134,7 +136,7 @@ class EventStreamFuturesTest extends FunSuite with TestHelpers with Waiters with
 		val w = new Waiter
 		val s = EventSource[Int]()
 
-		s.end onComplete { _ => w.dismiss }
+		s.end onComplete { _ => w.dismiss() }
 		//not stopping s...
 		intercept[TestFailedException] {
 			w.await(dismissals(1))

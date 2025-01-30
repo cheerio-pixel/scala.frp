@@ -262,7 +262,7 @@ private[frp] class DeadlinedEventStream[A](val parent: EventStream[A], deadline:
 		case Stop =>
 			stop()
 			false
-		case Fire(_) if deadline.isOverdue =>
+		case Fire(_) if deadline.isOverdue() =>
 			stop()
 			false
 		case Fire(e) =>
@@ -345,8 +345,8 @@ private[frp] class GroupedEventStream[A](val parent: EventStream[A], val groupSi
 	//how to fire the buffer (and clear it too)
 	private def fireBuffer() = {
 		if (buf.nonEmpty) {
-			val list = buf.result
-			buf.clear
+			val list = buf.result()
+			buf.clear()
 			fire(list)
 		}
 	}

@@ -4,9 +4,11 @@ import io.dylemma.frp._
 import org.scalatest._
 import org.scalatest.concurrent.Waiters
 
+import org.scalatest.funsuite.AnyFunSuite
+
 import scala.concurrent.duration._
 
-class EventStreamDeadlineTests extends FunSuite with TestHelpers with Waiters with Observer {
+class EventStreamDeadlineTests extends AnyFunSuite with TestHelpers with Waiters with Observer {
 
 	test("EventStream.before only encounters events before the deadline") {
 		val w = new Waiter
@@ -21,7 +23,7 @@ class EventStreamDeadlineTests extends FunSuite with TestHelpers with Waiters wi
 			s fire 3
 			s fire 4
 			assert(list.result == List(1, 2))
-			w.dismiss
+			w.dismiss()
 		}
 		w.await()
 	}
@@ -51,7 +53,7 @@ class EventStreamDeadlineTests extends FunSuite with TestHelpers with Waiters wi
 			s fire 3
 			s fire 4
 			assert(list.result == List(1, 2))
-			w.dismiss
+			w.dismiss()
 		}
 		w.await()
 	}
@@ -68,7 +70,7 @@ class EventStreamDeadlineTests extends FunSuite with TestHelpers with Waiters wi
 			s fire 3
 			s fire 4
 			assert(list.result == List(1, 2, 3, 4))
-			w.dismiss
+			w.dismiss()
 		}
 		w.await()
 	}

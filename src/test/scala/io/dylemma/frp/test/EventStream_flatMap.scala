@@ -1,9 +1,10 @@
 package io.dylemma.frp.test
 
+import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest._
 import io.dylemma.frp._
 
-class EventStream_flatMap extends FunSuite with TestHelpers with Observer {
+class EventStream_flatMap extends AnyFunSuite with TestHelpers with Observer {
 
 	test("EventStream.flatMap basic functionality") {
 		val s = EventSource[Int]()

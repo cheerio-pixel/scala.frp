@@ -19,7 +19,7 @@ private [frp] object TimeBasedFutures {
 	lazy val executor = Executors.newSingleThreadScheduledExecutor(DaemonThreadFactory)
 
 	class PromiseCompletingRunnable[T](body: => T) extends Runnable {
-		val promise = Promise[T]
+		val promise = Promise[T]()
 
 		override def run() = {
 			promise complete {

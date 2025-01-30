@@ -3,7 +3,9 @@ package io.dylemma.frp.test
 import org.scalatest._
 import io.dylemma.frp._
 
-class EventStreamTests extends FunSuite with TestHelpers {
+import org.scalatest.funsuite.AnyFunSuite
+
+class EventStreamTests extends AnyFunSuite with TestHelpers {
 
 	implicit object observer extends Observer
 
