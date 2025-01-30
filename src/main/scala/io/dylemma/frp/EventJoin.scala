@@ -52,11 +52,11 @@ trait EventJoin[A, B, C] extends EventSource[C] {
 	/** This is needed so that the respective closure is not
 	  * garbage-collected.
 	  */
-	protected lazy val leftHandlerFunc = { e: Event[A] => handle(Left(e)) }
+	protected lazy val leftHandlerFunc = { (e: Event[A]) => handle(Left(e)) }
 	/** This is needed so that the respective closure is not
 	  * garbage-collected.
 	  */
-	protected lazy val rightHandlerFunc = { e: Event[B] => handle(Right(e)) }
+	protected lazy val rightHandlerFunc = { (e: Event[B]) => handle(Right(e)) }
 
 	/** Checks whether both parent streams are stopped.
 	  * @return `true` if and only if both the `leftParent` and
