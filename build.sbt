@@ -2,9 +2,9 @@ name := "scala-frp"
 
 organization := "io.dylemma"
 
-version := "1.3"
+version := "1.4"
 
-crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.0")
+crossScalaVersions := Seq("2.13.16", "3.3.5")
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test"
 
@@ -29,7 +29,7 @@ publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
 
 pomExtra := (
-<url>https://github.com/dylemma/scala.frp</url>
+        <url>https://github.com/dylemma/scala.frp</url>
 	<licenses>
 		<license>
 			<name>MIT License</name>
