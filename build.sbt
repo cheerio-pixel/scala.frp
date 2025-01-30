@@ -13,9 +13,11 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.19" % Test,
 )
 
-scalacOptions in Compile += "-deprecation"
 
-scalacOptions in (Compile, doc) += "-implicits"
+Compile / scalacOptions += "-deprecation"
+
+Compile / doc / scalacOptions += "-implicits"
+
 
 // publishing stuff below
 
@@ -29,7 +31,7 @@ publishTo := {
 		Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-publishArtifact in Test := false
+Test / publishArtifact := false
 
 pomIncludeRepository := { _ => false }
 
