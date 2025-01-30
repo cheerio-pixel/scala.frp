@@ -8,7 +8,10 @@ scalaVersion := "2.13.16"
 
 crossScalaVersions := Seq("2.13.16", "3.3.5")
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test"
+libraryDependencies ++= Seq(
+  "org.scala-lang.modules" %% "scala-parallel-collections" % "1.2.0",
+  "org.scalatest" %% "scalatest" % "3.2.19" % Test,
+)
 
 scalacOptions in Compile += "-deprecation"
 
