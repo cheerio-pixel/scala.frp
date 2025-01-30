@@ -4,6 +4,8 @@ organization := "io.dylemma"
 
 version := "1.4"
 
+scalaVersion := "2.13.16"
+
 crossScalaVersions := Seq("2.13.16", "3.3.5")
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test"
